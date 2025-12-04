@@ -25,11 +25,39 @@
                             搜索：<span style="color: red">{{ query }} </span> &nbsp;&nbsp;
                         </h2>
                     {% endif %}
+                    <!-- 排序功能 -->
+                    <div class="search-sort">
+                        <span>排序方式：</span>
+                        <a href="?q={{ query }}{% if suggestion %}&suggestion={{ suggestion }}{% endif %}&sort=relevance" class="sort-link {% if sort == 'relevance' %}active{% endif %}">相关性</a>
+                        <a href="?q={{ query }}{% if suggestion %}&suggestion={{ suggestion }}{% endif %}&sort=time" class="sort-link {% if sort == 'time' %}active{% endif %}">最新发布</a>
+                        <a href="?q={{ query }}{% if suggestion %}&suggestion={{ suggestion }}{% endif %}&sort=views" class="sort-link {% if sort == 'views' %}active{% endif %}">最多浏览</a>
+                    </div>
                 </header><!-- .archive-header -->
             {% endif %}
-            {% if query and page.object_list %}
-                {% for article in page.object_list %}
-                    {% load_article_detail article.object True user %}
+            {% if query and sorted_results %}
+                {% for article in sorted_results %}
+                    <!-- 关键词高亮处理 -->
+                    {% with article.object as obj %}
+                        {% load highlight %}
+                        <article class="search-result">
+                            <header class="entry-header">
+                                <h2 class="entry-title">
+                                    <a href="{{ obj.get_absolute_url }}">
+                                        {% highlight obj.title with query html_tag="em" css_class="search-highlight" %}
+                                    </a>
+                                </h2>
+                            </header>
+                            <div class="entry-meta">
+                                <span class="entry-date">{{ obj.pub_time|date:"Y-m-d H:i" }}</span>
+                                <span class="entry-views">{{ obj.views }} 次浏览</span>
+                                <span class="entry-category">{{ obj.category.name }}</span>
+                            </div>
+                            <div class="entry-summary">
+                                {% highlight obj.body|truncatewords_html:50 with query html_tag="em" css_class="search-highlight" %}
+                                <a href="{{ obj.get_absolute_url }}" class="more-link">阅读更多 &rarr;</a>
+                            </div>
+                        </article>
+                    {% endwith %}
                 {% endfor %}
                 {% if page.has_previous or page.has_next %}
                     <nav id="nav-below" class="navigation" role="navigation">

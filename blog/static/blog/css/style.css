@@ -2805,6 +2805,179 @@ li #reply-title {
 .more-link:hover {
     text-decoration: underline;
 }
+
+/* 搜索下拉框样式 */
+#search-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border: 1px solid #e1e1e1;
+    border-top: none;
+    border-radius: 0 0 5px 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    display: none;
+}
+
+#search-suggestions,
+#search-history {
+    padding: 10px 0;
+}
+
+#search-suggestions {
+    border-bottom: 1px solid #e1e1e1;
+}
+
+.suggestions-list,
+.history-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.suggestion-item,
+.history-item {
+    padding: 8px 15px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.suggestion-item:hover,
+.history-item:hover {
+    background-color: #f5f5f5;
+}
+
+.suggestion-item a,
+.history-item a {
+    color: #2c3e50;
+    text-decoration: none;
+    display: block;
+}
+
+.history-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 15px 8px;
+    font-size: 0.9em;
+    color: #7f8c8d;
+    border-bottom: 1px solid #e1e1e1;
+    margin-bottom: 8px;
+}
+
+.history-header a {
+    color: #e74c3c;
+    text-decoration: none;
+    font-size: 0.8em;
+}
+
+.history-header a:hover {
+    text-decoration: underline;
+}
+
+.delete-history {
+    color: #e74c3c;
+    font-weight: bold;
+    cursor: pointer;
+    float: right;
+    margin-left: 10px;
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
+}
+
+.delete-history:hover {
+    opacity: 1;
+}
+
+/* 搜索框容器样式 */
+.widget_search form {
+    position: relative;
+}
+
+.widget_search input[type="text"] {
+    width: 100%;
+    padding: 8px 15px;
+    border: 1px solid #e1e1e1;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+.widget_search input[type="submit"] {
+    position: absolute;
+    top: 50%;
+    right: 5px;
+    transform: translateY(-50%);
+    padding: 5px 10px;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.2s ease;
+}
+
+.widget_search input[type="submit"]:hover {
+    background-color: #2980b9;
+}
+
+/* 搜索排序样式 */
+.search-sort {
+    margin-top: 15px;
+    padding: 10px 0;
+    border-top: 1px solid #e1e1e1;
+    border-bottom: 1px solid #e1e1e1;
+}
+
+.search-sort span {
+    color: #7f8c8d;
+    font-size: 0.9em;
+    margin-right: 10px;
+}
+
+.search-sort .sort-link {
+    color: #3498db;
+    text-decoration: none;
+    margin-right: 15px;
+    padding: 5px 10px;
+    border-radius: 3px;
+    transition: background-color 0.2s ease;
+}
+
+.search-sort .sort-link:hover {
+    background-color: #f5f5f5;
+}
+
+.search-sort .sort-link.active {
+    background-color: #3498db;
+    color: #fff;
+}
+
+/* 搜索高亮样式 */
+.search-highlight {
+    background-color: #fff3cd;
+    color: #856404;
+    font-style: normal;
+    font-weight: bold;
+    padding: 2px 4px;
+    border-radius: 3px;
+}
+
+/* 分类和标签筛选器视觉反馈样式 */
+.widget_su_siloed_terms li.active a,
+.widget_tag_cloud a.active {
+    background-color: #3498db;
+    color: #fff;
+    padding: 2px 6px;
+    border-radius: 3px;
+}
+
+.widget_su_siloed_terms li.active a:hover,
+.widget_tag_cloud a.active:hover {
+    background-color: #2980b9;
+}
 .comment-content .codehilite .w,
 .comment-content .codehilite .o,
 .comment-body .codehilite .kt,

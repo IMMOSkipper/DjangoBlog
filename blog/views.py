@@ -287,12 +287,28 @@ class LinkListView(ListView):
 class EsSearchView(SearchView):
     def get_context(self):
         paginator, page = self.build_page()
+        # 获取排序参数
+        sort = self.request.GET.get('sort', 'relevance')
+        
+        # 根据排序参数对结果进行排序
+        if sort == 'time':
+            # 按时间倒序排序
+            sorted_results = sorted(page.object_list, key=lambda x: x.object.pub_time, reverse=True)
+        elif sort == 'views':
+            # 按浏览量倒序排序
+            sorted_results = sorted(page.object_list, key=lambda x: x.object.views, reverse=True)
+        else:
+            # 默认按相关性排序
+            sorted_results = page.object_list
+        
         context = {
             "query": self.query,
             "form": self.form,
             "page": page,
             "paginator": paginator,
             "suggestion": None,
+            "sort": sort,
+            "sorted_results": sorted_results,
         }
         if hasattr(self.results, "query") and self.results.query.backend.include_spelling:
             context["suggestion"] = self.results.query.get_spelling_suggestion()
