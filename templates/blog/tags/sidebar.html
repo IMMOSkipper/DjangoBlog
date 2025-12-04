@@ -3,10 +3,11 @@
 <div id="secondary" class="widget-area" role="complementary">
     <aside id="search-2" class="widget widget_search">
         <form role="search" method="get" id="searchform" class="searchform" action="/search">
-            <div>
+            <div class="search-container">
                 <label class="screen-reader-text" for="s">{% trans 'search' %}：</label>
-                <input type="text" value="" name="q" id="q"/>
+                <input type="text" value="" name="q" id="q" placeholder="搜索文章..."/>
                 <input type="submit" id="searchsubmit" />
+                <div id="search-suggestions" class="search-suggestions"></div>
             </div>
         </form>
     </aside>
@@ -40,7 +41,7 @@
         <aside id="su_siloed_terms-2" class="widget widget_su_siloed_terms"><p class="widget-title">{% trans 'category' %}</p>
             <ul>
                 {% for c in sidebar_categorys %}
-                    <li class="cat-item cat-item-184"><a href={{ c.get_absolute_url }}>{{ c.name }}</a>
+                    <li class="cat-item cat-item-184 {% if c == category %}current-cat{% endif %}"><a href={{ c.get_absolute_url }}>{{ c.name }}</a>
                     </li>
                 {% endfor %}
             </ul>
@@ -97,8 +98,8 @@
             <div class="tagcloud">
                 {% for tag,count,size in sidebar_tags %}
                     <a href="{{ tag.get_absolute_url }}"
-                       class="tag-link-{{ tag.id }} tag-link-position-{{ tag.id }}"
-                       style="font-size: {{ size }}pt;" title="{{ count }}个话题"> {{ tag.name }}
+                       class="tag-link-{{ tag.id }} tag-link-position-{{ tag.id }} {% if tag == current_tag %}current-tag{% endif %}"
+                       style="font-size: '{{ size }}pt;'" title="{{ count }}个话题"> {{ tag.name }}
                     </a>
                 {% endfor %}
             </div>
