@@ -28,6 +28,15 @@
                 </header><!-- .archive-header -->
             {% endif %}
             {% if query and page.object_list %}
+                <div class="search-sort">
+                    <label for="sort-by">排序方式：</label>
+                    <select id="sort-by" name="sort" onchange="this.form.submit()">
+                        <option value="-created_time" {% if request.GET.sort == '-created_time' or not request.GET.sort %}selected{% endif %}>按时间倒序</option>
+                        <option value="created_time" {% if request.GET.sort == 'created_time' %}selected{% endif %}>按时间正序</option>
+                        <option value="-views" {% if request.GET.sort == '-views' %}selected{% endif %}>按浏览量倒序</option>
+                        <option value="views" {% if request.GET.sort == 'views' %}selected{% endif %}>按浏览量正序</option>
+                    </select>
+                </div>
                 {% for article in page.object_list %}
                     {% load_article_detail article.object True user %}
                 {% endfor %}
@@ -61,6 +70,26 @@
 
 {% block sidebar %}
     {% load_sidebar request.user 'i' %}
+{% endblock %}
+
+{% block footer %}
+    <script>
+        $(document).ready(function() {
+            // 获取搜索关键词
+            var query = '{{ query }}';
+            
+            if (query.length > 0) {
+                // 高亮搜索关键词
+                var regex = new RegExp('(' + query + ')', 'gi');
+                $('.search-result .entry-title').each(function() {
+                    $(this).html($(this).html().replace(regex, '<em>$1</em>'));
+                });
+                $('.search-excerpt').each(function() {
+                    $(this).html($(this).html().replace(regex, '<em>$1</em>'));
+                });
+            }
+        });
+    </script>
 {% endblock %}
 
 

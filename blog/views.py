@@ -285,6 +285,15 @@ class LinkListView(ListView):
 
 
 class EsSearchView(SearchView):
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        sort_by = self.request.GET.get('sort', '-created_time')
+        # 只允许特定的排序字段
+        allowed_sorts = ['-created_time', 'created_time', '-views', 'views']
+        if sort_by in allowed_sorts:
+            queryset = queryset.order_by(sort_by)
+        return queryset
+
     def get_context(self):
         paginator, page = self.build_page()
         context = {
